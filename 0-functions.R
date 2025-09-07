@@ -1,3 +1,9 @@
+# For Techtonique packages
+options(repos = c(techtonique = "https://r-packages.techtonique.net",
+                  CRAN = "https://cloud.r-project.org"))
+
+install.packages(c('ahead', 'bayesianrvfl'))
+
 library(forecast)
 
 require(Mcomp)
