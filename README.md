@@ -1,5 +1,5 @@
 
-# Transfer learning using ridge2f
+# Transfer learning using `ahead::ridge2f` on synthetic stock returns
 
 I pretrain `ahead::ridge2f` on 1000 synthetic stock returns using Bayesian Optimization, and test its performance on real market data. 
 
