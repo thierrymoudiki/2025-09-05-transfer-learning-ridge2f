@@ -1,9 +1,9 @@
 
 # Transfer learning using ridge2f
 
-I pretrain `ahead::ridge2f` on 1000 synthetic stock returns using Bayesian Optimization, and test its performace on real market data. 
+I pretrain `ahead::ridge2f` on 1000 synthetic stock returns using Bayesian Optimization, and test its performance on real market data. 
 
-Either: 
+In order to reproduce results, either: 
 
 Run `2025-09-07-transfer-learning-stock-returns.Rmd` 
 
@@ -30,7 +30,7 @@ Results on 10 CAC stocks:
 3 rugarch 0.09797592 97.14286     0.06758644
 ```
 
-More details about this model (used in industrial setting):
+More details about this model (actually used in an industrial setting):
 
 - [https://thierrymoudiki.github.io/blog/2025/07/01/r/python/ridge2-bayesian](https://thierrymoudiki.github.io/blog/2025/07/01/r/python/ridge2-bayesian)
 - [https://www.mdpi.com/2227-9091/6/1/22](https://www.mdpi.com/2227-9091/6/1/22)
