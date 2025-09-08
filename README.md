@@ -3,7 +3,13 @@
 
 I pretrain `ahead::ridge2f` on 1000 synthetic stock returns using Bayesian Optimization, and test its performace on real market data. 
 
-Execute the files in the order in which they appear. 
+Either: 
+
+Run `2025-09-07-transfer-learning-stock-returns.Rmd` 
+
+or
+
+Execute the `.R` files in the order in which they appear. 
 
 Results on 4 major European indices: 
 

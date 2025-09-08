@@ -1,3 +1,9 @@
+# For Techtonique packages
+options(repos = c(techtonique = "https://r-packages.techtonique.net",
+                  CRAN = "https://cloud.r-project.org"))
+
+install.packages(c('ahead', 'bayesianrvfl'))
+
 library(forecast)
 
 require(Mcomp)
@@ -81,11 +87,11 @@ generate_synthetic_returns <- function(
     regime_params = NULL,
     random_seed = NULL
 ) {
-  
+
   if (!is.null(random_seed)) {
     set.seed(random_seed)
   }
-  
+
   # Default regime switching parameters
   if (is.null(regime_params)) {
     regime_params <- list(
@@ -94,7 +100,7 @@ generate_synthetic_returns <- function(
       kappa_high_multiplier = 2.0
     )
   }
-  
+
   # Validate transition matrix
   if (!is.null(regime_params$transition_matrix)) {
     row_sums <- rowSums(regime_params$transition_matrix)
@@ -102,29 +108,29 @@ generate_synthetic_returns <- function(
       stop("Transition matrix rows must sum to 1.")
     }
   }
-  
+
   # Initialize arrays
   n <- n_days
   v <- numeric(n)
   r <- numeric(n)
   regime <- integer(n)
-  
+
   # Initialize starting values
   v[1] <- theta
   regime[1] <- 0
-  
+
   # Pre-generate all random numbers
   z_vol <- rnorm(n)
   z_return <- rnorm(n)
   jump_indicators <- rpois(n, lambda = lambda_jump)
-  
+
   # 1. Simulate the Markov chain for regimes
   for (t in 2:n) {
     prev_regime <- regime[t-1] + 1
     probs <- regime_params$transition_matrix[prev_regime, ]
     regime[t] <- sample(0:1, size = 1, prob = probs)
   }
-  
+
   # 2. Simulate the Heston process with jumps
   for (t in 2:n) {
     current_regime <- regime[t]
@@ -135,20 +141,20 @@ generate_synthetic_returns <- function(
       theta_t <- theta
       kappa_t <- kappa
     }
-    
+
     # Robust volatility discretization
     v_prev <- v[t-1]
     eta <- z_vol[t]
-    
+
     drift <- kappa_t * (theta_t - max(v_prev, 0))
     volvol_term <- sigma_v * sqrt(max(v_prev, 0)) * eta
     v_new <- v_prev + drift + volvol_term
     v[t] <- max(v_new, 0)
-    
+
     # Return process
     epsilon_t <- rho * eta + sqrt(1 - rho^2) * z_return[t]
     diffusion_component <- sqrt(max(v_prev, 0)) * epsilon_t
-    
+
     # Jump process (single jump per period)
     J <- 0
     if (jump_indicators[t] > 0) {
@@ -164,10 +170,10 @@ generate_synthetic_returns <- function(
         stop("Invalid jump_size_dist.")
       }
     }
-    
+
     r[t] <- mu + diffusion_component + J
   }
-  
+
   # 3. Add microstructure noise
   if (noise_dist == "normal") {
     noise <- rnorm(n, mean = 0, sd = noise_scale)
@@ -179,7 +185,7 @@ generate_synthetic_returns <- function(
     stop("Invalid noise_dist.")
   }
   r <- r + noise
-  
+
   # 4. Create output data.table
   dt <- data.table(
     date = seq.Date(as.Date("1970-01-01"), by = "day", length.out = n),
@@ -188,7 +194,7 @@ generate_synthetic_returns <- function(
     volatility = sqrt(v),
     regime = factor(regime, levels = c(0, 1), labels = c("Low Vol", "High Vol"))
   )
-  
+
   return(dt)
 }
 
@@ -201,51 +207,51 @@ generate_diverse_sv_paths <- function(
     include_regime_switching = TRUE,
     random_seed = NULL
 ) {
-  
+
   if (!is.null(random_seed)) {
     set.seed(random_seed)
   }
-  
+
   all_paths <- vector("list", n_paths)
   all_params <- vector("list", n_paths)
-  
+
   for (i in 1:n_paths) {
-    
+
     params <- list()
-    
+
     # Sample diverse parameters
     params$mu <- runif(1, -0.0005, 0.0005)
     params$kappa <- runif(1, 0.02, 0.15)
     params$theta <- runif(1, 5e-5, 3e-4)
     params$sigma_v <- runif(1, 0.005, 0.03)
     params$rho <- runif(1, -0.85, -0.4)
-    
+
     # Jump parameters
     params$lambda_jump <- sample(c(
       runif(1, 0.005, 0.02),
       runif(1, 0.02, 0.08),
       runif(1, 0.08, 0.15)
     ), 1)
-    
+
     if (jump_type == "mixed") {
       params$jump_size_dist <- sample(
-        c("normal", "log_normal", "exponential"), 
+        c("normal", "log_normal", "exponential"),
         1,
         prob = c(0.4, 0.4, 0.2)
       )
     } else {
       params$jump_size_dist <- jump_type
     }
-    
+
     params$sigma_jump <- runif(1, 0.01, 0.05)
     params$noise_dist <- sample(c("normal", "student_t"), 1, prob = c(0.7, 0.3))
     params$noise_scale <- runif(1, 1e-5, 2e-4)
     params$noise_df <- runif(1, 3, 8)
-    
+
     # Regime switching parameters with FIXED transition matrices
     if (include_regime_switching) {
       regime_type <- sample(1:3, 1)
-      
+
       if (regime_type == 1) {
         # Persistent regimes - FIXED: ensure rows sum to 1
         p11 <- runif(1, 0.97, 0.995)
@@ -268,7 +274,7 @@ generate_diverse_sv_paths <- function(
         p22 <- 1 - p21
         transition_matrix <- matrix(c(p11, p12, p21, p22), nrow = 2, byrow = TRUE)
       }
-      
+
       params$regime_params <- list(
         transition_matrix = transition_matrix,
         theta_high_multiplier = runif(1, 2.0, 5.0),
@@ -277,7 +283,7 @@ generate_diverse_sv_paths <- function(
     } else {
       params$regime_params <- NULL
     }
-    
+
     # Generate the path
     path_data <- generate_synthetic_returns(
       n_days = horizon,
@@ -294,15 +300,15 @@ generate_diverse_sv_paths <- function(
       noise_df = params$noise_df,
       regime_params = params$regime_params
     )
-    
+
     all_paths[[i]] <- path_data$returns
     all_params[[i]] <- params
-    
+
     if (i %% 1000 == 0) {
       message(sprintf("Generated %d/%d paths", i, n_paths))
     }
   }
-  
+
   result <- list(
     paths = all_paths,
     parameters = all_params,
@@ -311,9 +317,9 @@ generate_diverse_sv_paths <- function(
     n_paths = n_paths,
     generation_date = Sys.time()
   )
-  
+
   class(result) <- "diverse_sv_paths"
-  
+
   return(result)
 }
 
@@ -325,11 +331,11 @@ summary.diverse_sv_paths <- function(object, ...) {
   cat(sprintf("Horizon per path: %d days\n", object$horizon))
   cat(sprintf("Generation date: %s\n", object$generation_date))
   cat(sprintf("Total observations: %d\n", object$n_paths * object$horizon))
-  
+
   # Sample statistics
   sample_paths <- sample(1:object$n_paths, min(100, object$n_paths))
   returns <- unlist(lapply(object$paths[sample_paths], function(x) x))
-  
+
   cat("\nSummary statistics (sample):\n")
   cat(sprintf("Mean return: %.6f\n", mean(returns)))
   cat(sprintf("Return SD: %.6f\n", sd(returns)))
