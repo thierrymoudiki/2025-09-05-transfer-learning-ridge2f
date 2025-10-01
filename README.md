@@ -2,6 +2,7 @@
 # Transfer learning using `ahead::ridge2f` on synthetic stock returns
 
 I pretrain `ahead::ridge2f` on 1000 synthetic stock returns using Bayesian Optimization, and test its performance on real market data. 
+The model is served [in this API](https://pretrainedridge2f-8aee3d9572cc.herokuapp.com/__docs__/#/default/post_forecast).
 
 In order to reproduce results, either: 
 
