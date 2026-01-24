@@ -48,6 +48,7 @@ library(rugarch)
 library(fGarch)
 library(forecast)
 
+# Get hyperparameters of the pretrained model
 best_params <- readRDS(file="best_params_with_clustering_v1.rds")
 print("Bayesian Optimization Parameters:")
 print(best_params$best_param)
