@@ -31,6 +31,26 @@ Results on 10 CAC stocks:
 3 rugarch 0.09797592 97.14286     0.06758644
 ```
 
+Results on 29 SP500 stocks: 
+
+```R
+   Method    Winkler Coverage Interval_Width
+1  fgarch 0.09113443 95.65217     0.07321220
+2  ridge2 0.09370551 95.65217     0.07065134
+3 rugarch 0.09176901 97.10145     0.07119994
+
+ Winkler comparison:
+ridge2 vs rugarch: p-value = 0.4392
+ridge2 vs fgarch: p-value = 0.3204
+rugarch vs fgarch: p-value = 0.6021
+
+ Coverage comparison:
+ridge2 vs rugarch: p-value = 0.0673
+ridge2 vs fgarch: p-value = 0.0313 *
+rugarch vs fgarch: p-value = 0.8390
+```
+
+
 More details about this model (actually used in an industrial setting):
 
 - [https://thierrymoudiki.github.io/blog/2025/07/01/r/python/ridge2-bayesian](https://thierrymoudiki.github.io/blog/2025/07/01/r/python/ridge2-bayesian)
