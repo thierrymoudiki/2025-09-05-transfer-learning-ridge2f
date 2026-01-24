@@ -31,6 +31,37 @@ Results on 10 CAC stocks:
 3 rugarch 0.09797592 97.14286     0.06758644
 ```
 
+**level = 80**
+
+```R
+   Method    Winkler Coverage Interval_Width
+1  fgarch 0.05719710 83.57143     0.03511276
+2  ridge2 0.05768439 82.85714     0.04028393
+3 rugarch 0.05711513 83.57143     0.03517754
+
+> # Statistical significance testing
+> cat("\n=== STATISTICAL COMPARISON ===\n")
+
+=== STATISTICAL COMPARISON ===
+
+> methods <- unique(summary_table$Method)
+
+> for (metric in c("Winkler", "Coverage")) {
++   cat(paste("\n", metric, "comparison:\n"))
++   for (i in 1:(length(methods)-1)) {
++     for (j in (i+1 .... [TRUNCATED] 
+
+ Winkler comparison:
+ridge2 vs rugarch: p-value = 0.4019
+ridge2 vs fgarch: p-value = 0.3452
+rugarch vs fgarch: p-value = 0.3436
+
+ Coverage comparison:
+ridge2 vs rugarch: p-value = 0.5599
+ridge2 vs fgarch: p-value = 0.7109
+rugarch vs fgarch: p-value = 0.3434
+```
+
 Results on 29 SP500 stocks: 
 
 ```R
@@ -48,6 +79,32 @@ rugarch vs fgarch: p-value = 0.6021
 ridge2 vs rugarch: p-value = 0.0673
 ridge2 vs fgarch: p-value = 0.0313 *
 rugarch vs fgarch: p-value = 0.8390
+```
+
+**level = 80**
+
+```R
+   Method    Winkler Coverage Interval_Width
+1  fgarch 0.06098937 79.71014     0.03871478
+2  ridge2 0.06271718 79.71014     0.04084767
+3 rugarch 0.06116365 79.71014     0.03765069
+
+> # Statistical significance testing
+> cat("\n=== STATISTICAL COMPARISON ===\n")
+
+=== STATISTICAL COMPARISON ===
+
+> methods <- unique(summary_table$Method)
+
+> for (metric in c("Winkler", "Coverage")) {
++   cat(paste("\n", metric, "comparison:\n"))
++   for (i in 1:(length(methods)-1)) {
++     for (j in (i+1 .... [TRUNCATED] 
+
+ Winkler comparison:
+ridge2 vs rugarch: p-value = 0.7437
+ridge2 vs fgarch: p-value = 0.6085
+rugarch vs fgarch: p-value = 0.8138
 ```
 
 
