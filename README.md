@@ -1,7 +1,7 @@
 
 # Transfer learning using `ahead::ridge2f` on synthetic stock returns
 
-I pretrain [`ahead::ridge2f`](https://www.mdpi.com/2227-9091/6/1/22), a doubly-constrained Random Vector Functional Link (RVFL) Network on [1000 synthetic stock returns](https://raw.githubusercontent.com/Techtonique/datasets/refs/heads/main/time_series/multivariate/synthetic_stock_returns.csv) using Bayesian Optimization, and test its performance on real market data.
+I pretrain [`ahead::ridge2f`](https://www.mdpi.com/2227-9091/6/1/22), a doubly-constrained Random Vector Functional Link (RVFL) Network on [1000 synthetic stock returns](https://raw.githubusercontent.com/Techtonique/datasets/refs/heads/main/time_series/multivariate/synthetic_stock_returns.csv) (reproducing Markets' stylized facts) using Bayesian Optimization, and test its performance on real market data.
 
 In order to reproduce the results (find model hyperparameters after pretraining, and reproduce the forecasting results), either: 
 
