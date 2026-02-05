@@ -5,7 +5,7 @@ I pretrain [`ahead::ridge2f`](https://www.mdpi.com/2227-9091/6/1/22), a doubly-c
 
 In order to reproduce the results (find model hyperparameters after pretraining, and reproduce the forecasting results), either: 
 
-Run (can be improved because the obective function is embarrassingly parallel) `0-2025-09-07-transfer-learning-stock-returns.Rmd` 
+Run (can be improved because the obective function is embarrassingly parallel) [`0-2025-09-07-transfer-learning-stock-returns.Rmd`](0-2025-09-07-transfer-learning-stock-returns.Rmd) 
 
 or
 
