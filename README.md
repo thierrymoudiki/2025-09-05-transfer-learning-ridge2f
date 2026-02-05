@@ -5,7 +5,7 @@ I pretrain [`ahead::ridge2f`](https://www.mdpi.com/2227-9091/6/1/22), a doubly-c
 
 In order to reproduce the results (find model hyperparameters after pretraining, and reproduce the forecasting results), either: 
 
-Run `2025-09-07-transfer-learning-stock-returns.Rmd` 
+Run `0-2025-09-07-transfer-learning-stock-returns.Rmd` 
 
 or
 
