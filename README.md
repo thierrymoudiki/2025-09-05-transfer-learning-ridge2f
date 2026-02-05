@@ -1,16 +1,15 @@
 
 # Transfer learning using `ahead::ridge2f` on synthetic stock returns
 
-I pretrain `ahead::ridge2f` on 1000 synthetic stock returns using Bayesian Optimization, and test its performance on real market data. 
-The model is served [in this API](https://pretrainedridge2f-8aee3d9572cc.herokuapp.com/__docs__/#/default/post_forecast).
+I pretrain [`ahead::ridge2f`](https://www.mdpi.com/2227-9091/6/1/22), a doubly-constrained Random Vector Functional Link (RVFL) Network on [1000 synthetic stock returns](https://raw.githubusercontent.com/Techtonique/datasets/refs/heads/main/time_series/multivariate/synthetic_stock_returns.csv) using Bayesian Optimization, and test its performance on real market data.
 
-In order to reproduce results, either: 
+In order to reproduce the results (find model hyperparameters after pretraining, and reproduce the forecasting results), either: 
 
 Run `2025-09-07-transfer-learning-stock-returns.Rmd` 
 
 or
 
-Execute the `.R` files in the order in which they appear. 
+Execute the `.R` files starting with a number, in the order in which they appear. 
 
 Results on 4 major European indices: 
 
