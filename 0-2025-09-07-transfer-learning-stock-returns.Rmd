@@ -402,7 +402,8 @@ objective_function_rmse <- function(xx) {
   
   pb <- utils::txtProgressBar(max = length(synthetic_paths), 
   style=3)
-  
+
+  # This loop should be run in parallel
   for (i in seq_along(synthetic_paths)) {
     series <- synthetic_paths[[i]]
     train <- series[1:400]
