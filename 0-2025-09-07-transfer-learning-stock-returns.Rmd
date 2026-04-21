@@ -439,8 +439,8 @@ res_rmse <- bayesianrvfl::bayes_opt(
   objective_function_rmse,
   lower = c(3L, 1L, -4, -4, 5, 0), 
   upper = c(40L, 100L, 5, 5, 200, 5L),
-  init_points = 10,
-  n_iter = 50
+  nb_init = 10,
+  nb_iter = 50
 )
 
 saveRDS(res_rmse, "best_params_with_clustering.rds")
