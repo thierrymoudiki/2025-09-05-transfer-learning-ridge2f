@@ -9,7 +9,7 @@ Run (can be improved because the obective function is embarrassingly parallel) [
 
 or
 
-Execute the `.R` files starting with a number, in the order in which they appear. 
+Execute the `.R` files starting with a number, in the order in which they appear (starting with `0-functions.R`). 
 
 Results on 4 major European indices: 
 
